@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="el">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<meta name="description" content="Free Web tutorials">
+	<meta name="keywords" content="HTML, CSS, JavaScript">
+	<meta name="author" content="John Doe">
+	<link rel="stylesheet" href="style.css">
+	
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+	 <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+	 <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+	<!-- Make sure you put this AFTER Leaflet's CSS -->
+	<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" 
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
+	 <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+	 <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+</head>
+<body>
+	 <div id="map"></div>
+
+	<script>
+	var map = L.map('map').setView([37.94296740923939, 23.644866810129752], 17);
+	
+	L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	    maxZoom: 19
+	}).addTo(map);
+	
+	L.Control.geocoder().addTo(map);
+	
+	L.Routing.control({
+	    waypoints: [
+			L.latLng(37.94296740923939, 23.644866810129752),
+			L.latLng(37.94546983570866, 23.6468711231226),
+			L.latLng(37.932244502616996, 23.64585307794014),
+			L.latLng(37.93792732017739, 23.657842501120882)
+			
+		],
+	    routeWhileDragging: true,
+	    geocoder: L.Control.Geocoder.nominatim()
+	}).addTo(map);
+	
+	var pirfmark_akmi = L.marker([37.94296740923939, 23.644866810129752], { alt: 'ΙΕΚ ΑΚΜΗ' }).addTo(map);
+	var pirfmark_pinakothiki = L.marker([37.94546983570866, 23.6468711231226], { alt: 'Εθνική Πινακοθήκη' }).addTo(map);
+	var pirfmark_nautmouseio = L.marker([37.932244502616996, 23.64585307794014], { alt: 'Ναυτικό Μουσείο Ελλάδος' }).addTo(map);
+	var pirfmark_mikrolimano = L.marker([37.93792732017739, 23.657842501120882], { alt: 'Μικρολίμανο' }).addTo(map);
+	var pirfmark_mar = L.marker([37.937368310181846, 23.646168285167448], { alt: 'Μαρίνα Ζέας' }).addTo(map);
+	var pirfmark_tr = L.marker([37.9485595788133, 23.64704616681205], { alt: 'Τρούμπα' }).addTo(map);
+	var pirfmark_arxaio = L.marker([37.93743592006683, 23.645262669669], { alt: 'Αρχαίο Θέατρο Ζέας' }).addTo(map);
+	var pirfmark_arxaiolog = L.marker([37.937221965343134, 23.64493078872411], { alt: 'Αρχαιολογικό Μουσείο Πειραιά' }).addTo(map);
+	var pirfmark_dimotiko = L.marker([37.94298333417981, 23.64851192908259], { alt: 'Δημοτικό Θέατρο Πειραιά' }).addTo(map);
+	var pirfmark_peir = L.marker([37.93092856849068, 23.631112999964255], { alt: 'Πειραική' }).addTo(map);
+	
+	pirfmark_akmi.bindPopup("<bΙΕΚ ΑΚΜΗ</b>").openPopup();
+	pirfmark_pinakothiki.bindPopup("<b>Εθνική Πινακοθήκη</b>").openPopup();
+	pirfmark_nautmouseio.bindPopup("<b>Ναυτικό Μουσείο Ελλάδος</b>").openPopup();
+	pirfmark_mikrolimano.bindPopup("<b>Μικρολίμανο</b>").openPopup();
+	pirfmark_mar.bindPopup("<b>Μαρίνα Ζέας</b>").openPopup();
+	pirfmark_tr.bindPopup("<b>Τρούμπα</b>").openPopup();
+	pirfmark_arxaio.bindPopup("<b>Αρχαίο Θέατρο Ζέας</b>").openPopup();
+	pirfmark_arxaiolog.bindPopup("<b>Αρχαιολογικό Μουσείο Πειραιά</b>").openPopup();
+	pirfmark_dimotiko.bindPopup("Δημοτικό Θέατρο Πειραιά</b>").openPopup();
+	pirfmark_peir.bindPopup("<b>Πεϊραική</b>").openPopup();
+	
+	function createButton(label, container) {
+		var btn = L.DomUtil.create('button', '', container);
+		btn.setAttribute('type', 'button');
+		btn.innerHTML = label;
+		return btn;
+	}
+
+	map.on('click', function(e) {
+		var container = L.DomUtil.create('div'),
+			startBtn = createButton('Start from this location', container),
+			destBtn = createButton('Go to this location', container);
+
+		L.popup()
+			.setContent(container)
+			.setLatLng(e.latlng)
+			.openOn(map);
+	});
+	</script>
+
+</body>
+</html>
